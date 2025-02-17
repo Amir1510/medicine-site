@@ -987,10 +987,11 @@ input[type="time"]::-webkit-clear-button {
   transition: transform 0.5s;
 }
 
+.info-card h2 {
+  margin-bottom: 20px;
+}
+
 .nav-links li:hover {
   transform: translateY(-2px);
 }
 
-.info-card h2 {
-  margin-bottom: 20px;
-}
