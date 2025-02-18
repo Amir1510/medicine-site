@@ -47,34 +47,6 @@ def profile(request):
     filtered_data2 = CreateUser.objects.filter(username=username)
     return render(request, 'profile.html', {'filtered_data': filtered_data, 'filtered_data2': filtered_data2})
 
-class PlanView(View):
-    def get(self, request):
-        form = Appointment()
-        return render(request, 'planirovanie.html', context={
-            'form': form,
-        })
-
-    def post(self, request):
-        if request.method == 'POST':
-            form = Appointment(request.POST)
-            if form.is_valid():
-                username = request.user.username
-                blood_date = form.save(commit=False)
-                blood_date.username = username
-                try:
-                    blood_date.save()
-                except:
-                    model = Plan.objects.get(username=username)
-                    model.weight = blood_date.weight
-                    model.height = blood_date.height
-                    model.age = blood_date.age
-                    model.group_of_blood = blood_date.group_of_blood
-                    model.save()
-                return redirect('schedule_donation')
-        else:
-            form = Appointment()
-        return render(request, 'planirovanie.html', {'form': form})
-
 class SignUpView(View):
     def get(self, request, *args, **kwargs):
         form = SignUpForm()
@@ -124,12 +96,12 @@ def schedule_donation(request):
         donation_time = request.POST.get('donation_time')
         
         if donation_date and donation_time:
-            # Convert string to datetime
+     
             donation_datetime = datetime.strptime(f"{donation_date} {donation_time}", "%Y-%m-%d %H:%M")
             
-            # Check if the selected day is not Sunday
-            if donation_datetime.weekday() != 6:  # 6 represents Sunday
-                # Here you can add logic to save the scheduled donation
+           
+            if donation_datetime.weekday() != 6:
+       
                 messages.success(request, '')
                 return redirect('index')
             else:
@@ -139,7 +111,7 @@ def schedule_donation(request):
     
     today_date = datetime.now().strftime('%Y-%m-%d')
     
-    # Generate time slots
+
     time_slots = []
     start_time = datetime.strptime("08:30", "%H:%M")
     end_time = datetime.strptime("16:30", "%H:%M")
@@ -193,3 +165,37 @@ def update_donor_info(request):
             return render(request, 'planirovanie.html', {'form': form})
     return redirect('planing_donor')
 
+class PlanView(View):
+    def get(self, request):
+        form = Appointment()
+        source = request.GET.get('source', '')
+        return render(request, 'planirovanie.html', context={
+            'form': form,
+            'source': source,
+        })
+
+    def post(self, request):
+        if request.method == 'POST':
+            form = Appointment(request.POST)
+            if form.is_valid():
+                username = request.user.username
+                blood_date = form.save(commit=False)
+                blood_date.username = username
+                try:
+                    blood_date.save()
+                except:
+                    model = Plan.objects.get(username=username)
+                    model.weight = blood_date.weight
+                    model.height = blood_date.height
+                    model.age = blood_date.age
+                    model.group_of_blood = blood_date.group_of_blood
+                    model.save()
+                
+                # Проверяем источник запроса
+                if request.POST.get('source') == 'profile':
+                    return redirect('profile')
+                else:
+                    return redirect('schedule_donation')
+        else:
+            form = Appointment()
+        return render(request, 'planirovanie.html', {'form': form})

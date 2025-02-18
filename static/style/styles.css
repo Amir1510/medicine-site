@@ -853,66 +853,6 @@ input[type="time"]::-webkit-clear-button {
   border: none;
 }
 
-.bloodgroups-form-container {
-  max-width: 400px;
-  margin: 0 auto;
-  background-color: var(--white);
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.bloodgroops-form input select {
-  padding: 0.5rem;
-  border: 1px solid var(--light-gray);
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.bloodgroups-form-container {
-  max-width: 400px;
-  margin: 0 auto;
-  background-color: var(--white);
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 1.8rem;
-}
-
-.bloodgroups-form-container h2 {
-  margin-bottom: 1rem;
-  color: var(--text-color);
-}
-
-.bloodgroops-form .form-group {
-  margin-bottom: 1rem;
-}
-
-.bloodgroops-form label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  text-align: center;
-}
-
-.bloodgroops-form .btn {
-  width: 100%;
-  margin-top: 1rem;
-}
-
-.bloodgroops-form .text-center {
-  margin-top: 1rem;
-  text-align: center;
-}
-
-.blood-groups h2 {
-  text-align: center;
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .bt {
   font-weight: normal;
 }
@@ -979,7 +919,7 @@ input[type="time"]::-webkit-clear-button {
   transition: transform 0.5s;
 }
 
-.nav-links li:hover {
+.nav-links li:hover:not(:last-child) {
   transform: translateY(-2px);
 }
 
@@ -1031,8 +971,7 @@ input[type="time"]::-webkit-clear-button {
   border-radius: 12px;
   position: relative;
   cursor: pointer;
-  transition: background-color 0.3s;
-  vertical-align: middle;
+  transition: background-color 0.5s;
 }
 
 .bloodgroops-form input[type="checkbox"]::after {

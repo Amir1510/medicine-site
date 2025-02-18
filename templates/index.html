@@ -199,7 +199,7 @@
         checkboxes.forEach(function(checkbox) {
             var statusSpan = document.createElement('span');
             statusSpan.className = 'checkbox-status';
-            statusSpan.textContent = checkbox.checked ? 'Включена' : 'Выключена';
+            statusSpan.textContent = checkbox.checked ? '  Включена' : 'Выключена';
             
             var wrapper = document.createElement('div');
             wrapper.className = 'checkbox-wrapper';
@@ -209,7 +209,7 @@
             wrapper.appendChild(statusSpan);
             
             checkbox.addEventListener('change', function() {
-                statusSpan.textContent = this.checked ? 'Включена' : 'Выключена';
+                statusSpan.textContent = this.checked ? '  Включена' : 'Выключена';
             });
         });
     });

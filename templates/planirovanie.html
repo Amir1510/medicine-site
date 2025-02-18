@@ -56,7 +56,13 @@
     <div class="container">
       <div class="auth-form-container">
         <h2>Анкета</h2>
-        <p>Заполните все поля, чтобы вы смогли сдать кровь.</p>
+        <p id="form-description">
+          {% if request.GET.source == 'profile' %}
+            Заполните все поля, чтобы изменить данные.
+          {% else %}
+            Заполните все поля, чтобы вы смогли сдать кровь.
+          {% endif %}
+        </p>
         {% if form.errors %}
           {% for field in form %}
             {% for error in field.errors %}
