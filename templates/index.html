@@ -101,7 +101,7 @@
               action="{% url 'index' %}"
               class="bloodgroops-form"
             >
-              <h2>Изменить состояние группы крови</h2>
+              <h2>Состояние группы крови</h2>
               {% csrf_token %} {{ form.as_p }}
               <button type="submit" class="btn btn-primary">Сохранить</button>
             </form>
@@ -192,6 +192,27 @@
           }
         });
       }
+      
+      document.addEventListener('DOMContentLoaded', function() {
+        var checkboxes = document.querySelectorAll('.bloodgroops-form input[type="checkbox"]');
+        
+        checkboxes.forEach(function(checkbox) {
+            var statusSpan = document.createElement('span');
+            statusSpan.className = 'checkbox-status';
+            statusSpan.textContent = checkbox.checked ? 'Включена' : 'Выключена';
+            
+            var wrapper = document.createElement('div');
+            wrapper.className = 'checkbox-wrapper';
+            
+            checkbox.parentNode.insertBefore(wrapper, checkbox);
+            wrapper.appendChild(checkbox);
+            wrapper.appendChild(statusSpan);
+            
+            checkbox.addEventListener('change', function() {
+                statusSpan.textContent = this.checked ? 'Включена' : 'Выключена';
+            });
+        });
+    });
     </script>
   </body>
 </html>

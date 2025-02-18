@@ -82,8 +82,8 @@ class BloodGroup(models.Model):
     ]
 
     group = models.CharField(max_length=3, choices=BLOOD_GROUP_CHOICES, verbose_name="Группа крови")
-    is_active = models.BooleanField(default=False, verbose_name="Нажата")
+    is_active = models.BooleanField(default=False, verbose_name="Состояние")
 
     def __str__(self):
-        return f"{self.group} - {'Нажата' if self.is_active else 'Не нажата'}"
+        return f"{self.group} - {'Состояние' if self.is_active else ''}"
     
