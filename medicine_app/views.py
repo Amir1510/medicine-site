@@ -7,6 +7,10 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from datetime import datetime, timedelta
+from medicine_app.serializers import *
+from rest_framework.views import APIView
+from rest_framework import status, generics
+from rest_framework.response import Response
 
 def contraindications(request):
     return render(request, 'protivopokazaniya.html')
@@ -30,6 +34,8 @@ def index(request):
 
 
 
+def planned_donations(request):
+    return render(request, 'planned-donations.html')
 
 def about(request):
     return render(request, 'o_nas.html')
@@ -46,6 +52,34 @@ def profile(request):
     filtered_data = Plan.objects.filter(username=username)
     filtered_data2 = CreateUser.objects.filter(username=username)
     return render(request, 'profile.html', {'filtered_data': filtered_data, 'filtered_data2': filtered_data2})
+
+class PlanView(View):
+    def get(self, request):
+        form = Appointment()
+        return render(request, 'planirovanie.html', context={
+            'form': form,
+        })
+
+    def post(self, request):
+        if request.method == 'POST':
+            form = Appointment(request.POST)
+            if form.is_valid():
+                username = request.user.username
+                blood_date = form.save(commit=False)
+                blood_date.username = username
+                try:
+                    blood_date.save()
+                except:
+                    model = Plan.objects.get(username=username)
+                    model.weight = blood_date.weight
+                    model.height = blood_date.height
+                    model.age = blood_date.age
+                    model.group_of_blood = blood_date.group_of_blood
+                    model.save()
+                return redirect('schedule_donation')
+        else:
+            form = Appointment()
+        return render(request, 'planirovanie.html', {'form': form})
 
 class SignUpView(View):
     def get(self, request, *args, **kwargs):
@@ -125,7 +159,6 @@ def schedule_donation(request):
         'time_slots': time_slots
     })
 
-
 @login_required
 def check_donor_info(request):
     username = request.user.username
@@ -199,3 +232,41 @@ class PlanView(View):
         else:
             form = Appointment()
         return render(request, 'planirovanie.html', {'form': form})
+
+class NewData(APIView):
+    def post(self, request):
+        username = request.data.get('username')
+
+        try:
+            plan = Plan.objects.get(username=username)
+        except Plan.DoesNotExist:
+            return Response({"error": "Plan not found"}, status=status.HTTP_400_BAD_REQUEST)
+
+        request.data["username"] = plan
+
+        date, created = Data.objects.update_or_create(
+            username=plan,
+            defaults=request.data
+        )
+
+        serializer = DataSerializer(date)
+        return Response(serializer.data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
+    
+class GetData(APIView):
+    def get(self, request):
+         users = Plan.objects.select_related('data').all()
+         print(users)
+         serializer = PlannedSerializer(users, many=True)
+         return Response(serializer.data)
+
+class DataDeleteView(generics.DestroyAPIView):
+    queryset = Data.objects.all()
+    serializer_class = DataSerializer
+
+class IsStaff(APIView):
+    def post(self, request):
+        username = request.data.get('username')
+        is_staff = CreateUser.objects.get(username=username)
+        serializer = IsStaffSerializer(is_staff)
+        print(serializer.data)
+        return Response(serializer.data)

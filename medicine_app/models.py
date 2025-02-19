@@ -69,6 +69,16 @@ class Plan(models.Model):
     height = models.CharField(max_length=10, choices=HEIGHT_CHOICES, default='80')
     age = models.CharField(max_length=10, choices=AGE_CHOICES, default='0')
 
+class Data(models.Model):
+    id = models.AutoField(primary_key=True)
+    username = models.OneToOneField(
+        Plan, on_delete=models.CASCADE, to_field='username', related_name='data'
+    )
+    data = models.CharField(max_length=20)
+    time = models.CharField(default='8:30')
+
+  
+
 class BloodGroup(models.Model):
     BLOOD_GROUP_CHOICES = [
         ('A+', 'A+'),
@@ -85,5 +95,5 @@ class BloodGroup(models.Model):
     is_active = models.BooleanField(default=False, verbose_name="Состояние")
 
     def __str__(self):
-        return f"{self.group} - {'Состояние' if self.is_active else ''}"
+        return f"{self.group} - {'Состояние' if self.is_active else 'Состояние'}"
     
