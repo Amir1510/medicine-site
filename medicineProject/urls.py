@@ -33,4 +33,9 @@ urlpatterns = [
     path('update_donor_info/', views.update_donor_info, name='update_donor_info'),
     path('check_donor_info/', views.check_donor_info, name='check_donor_info'),
     path('protivopokazaniya/', views.contraindications, name='contraindications'),
-]
+    path('planned_donations/', views.planned_donations, name='planned_donations'),
+    path('api/add_data/', views.NewData.as_view(), name='add_data'),
+    path('api/delete_data/<int:pk>/', views.DataDeleteView.as_view(), name='delete_data'),
+    path('api/planned-donations/', views.GetData.as_view(), name='get_data'),
+    path('api/is_staff/',views.IsStaff.as_view(), name='is_staff')
+] 
