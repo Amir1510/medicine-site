@@ -476,6 +476,11 @@ body {
   text-decoration: none;
 }
 
+select,
+option {
+  cursor: pointer;
+}
+
 .btn {
   display: inline-block;
   padding: 0.75rem 1.5rem;
@@ -484,6 +489,7 @@ body {
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 1px;
+  cursor: pointer;
 }
 
 .btn-primary {
@@ -880,20 +886,25 @@ input[type="time"]::-webkit-clear-button {
 }
 
 .donation-card {
+  padding: 2rem;
   background-color: var(--white);
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3sease;
+  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .donation-card h3 {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .donation-card p {
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.donation-card strong {
+  color: #6659fc;
 }
 
 .delete-btn {
@@ -915,7 +926,7 @@ input[type="time"]::-webkit-clear-button {
   text-decoration-line: overline;
 }
 
-.nav-links li{
+.nav-links li {
   transition: transform 0.5s;
 }
 
@@ -951,6 +962,7 @@ input[type="time"]::-webkit-clear-button {
   display: inline-block;
   margin-right: 1rem;
   font-weight: 500;
+  margin-bottom: 0.5rem;
 }
 
 .bloodgroops-form select {
@@ -960,6 +972,15 @@ input[type="time"]::-webkit-clear-button {
   border-radius: 4px;
   font-size: 1rem;
   margin-bottom: 1rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.bloodgroops-form select:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 .bloodgroops-form input[type="checkbox"] {
@@ -975,7 +996,7 @@ input[type="time"]::-webkit-clear-button {
 }
 
 .bloodgroops-form input[type="checkbox"]::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 20px;
   height: 20px;
@@ -1036,9 +1057,83 @@ input[type="time"]::-webkit-clear-button {
 
 .bloodgroops-form .checkbox-status {
   transition: color 0.3s ease;
-  color: var(--light-gray)
+  color: var(--light-gray);
 }
 
 .bloodgroops-form input[type="checkbox"]:checked + .checkbox-status {
   color: var(--primary-color);
 }
+
+.donation-card {
+  padding: 1.5rem;
+  background-color: var(--white);
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.donation-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.donation-card h3 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.donation-card p {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  color: var(--text-color);
+  line-height: 1.4;
+}
+
+.donation-card strong {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.delete-btn {
+  margin-top: 1rem;
+  color: var(--primary-color);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.4s, color 0.3s;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  border: 1.46px solid var(--primary-color);;
+}
+
+.delete-btn:hover {
+  transform: scale(94%);
+  background-color: var(--primary-color);
+}
+
+.donation-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), #c62828);
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.donation-card:hover::before {
+  opacity: 1;
+}
+
